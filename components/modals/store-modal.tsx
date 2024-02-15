@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import * as z from "zod";
 import { useStoreModal } from "@/hooks/use-store-modals";
 import { Modal } from "@/components/ui/modal";
@@ -14,8 +15,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const StoreModal = () => {
+
+  const [loading, setLoading ] = useState(false)
+
   const storeModal = useStoreModal();
 
   const formSchema = z.object({
@@ -29,8 +35,21 @@ export const StoreModal = () => {
     },
   });
 
-  const onSubmithHandler = (value: z.infer<typeof formSchema>) => {
-    console.log(value);
+  const onSubmithHandler = async (value: z.infer<typeof formSchema>) => {
+    try {
+      setLoading(true)
+
+      const response = await axios.post("api/stores", value )
+      toast.success("Store Created")
+      console.log(response.data)
+
+    } catch (error) {
+      console.log(error)
+      toast.error("Something went wrong.")
+
+    }finally {
+      setLoading(false)
+    }
   };
 
   return (
@@ -51,18 +70,18 @@ export const StoreModal = () => {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="E-Commerc" {...field} />
+                      <Input disabled={loading} placeholder="E-Commerc" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-                <Button variant={"outline"} onClick={storeModal.onClose}>
+                <Button disabled={loading} variant={"outline"} onClick={storeModal.onClose}>
                   Cancel
                 </Button>
 
-                <Button type="submit">Continue</Button>
+                <Button disabled={loading} type="submit">Continue</Button>
               </div>
             </form>
           </Form>
