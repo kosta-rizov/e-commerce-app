@@ -15,9 +15,5 @@ export default function Home() {
 
   },[isOpen, onOpen])
 
-  return (
-    <div>
-      <UserButton afterSignOutUrl='/'/>
-    </div>
-  );
+  return null;
 }
