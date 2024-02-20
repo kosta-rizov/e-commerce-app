@@ -6,7 +6,7 @@ import { FC } from 'react'
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  params: {storedId: string};
+  params: {storeId: string};
 }
 
 const DashboardLayout: FC<DashboardLayoutProps> = async ({children , params}) => {
@@ -18,7 +18,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = async ({children , params}) =>
     
     const store = await prismadb.store.findFirst({
         where: {
-            id: params.storedId,
+            id: params.storeId,
             userId
         }
     })
