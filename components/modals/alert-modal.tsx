@@ -26,7 +26,7 @@ const AlertModal: FC<alertModalProps> = ({
 
   return (
     <Modal
-      title="Are you sure you want to delete this Store"
+      title="Are you sure"
       description="This action cannot be undone."
       isOpen={isOpen}
       onClose={onClose}
