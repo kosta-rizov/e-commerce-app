@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import * as z from "zod";
@@ -96,6 +96,10 @@ const BillboardForm: FC<BillboardFormProps> = ({ initialData }) => {
       setOpen(false);
     }
   };
+
+  useEffect(() => {
+    router.refresh()
+  },[router])
 
   return (
     <>
